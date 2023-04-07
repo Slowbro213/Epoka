@@ -1,6 +1,15 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <stdlib.h>
+#include <ctype.h>
+int isNumber(char s[])
+{
+    for (int i = 0; s[i]; i++)
+        if (!isdigit(s[i]))
+            return 0;
+    return 1;
+}
 void addition()
 {
     double a,b;
@@ -51,13 +60,34 @@ void square_root()
     number=sqrt(number);
     printf("%lf",number);
 }
+void calculate_average()
+{
+    int counter=1;
+    char input_by_user[20];
+    char *endptr;
+    double number=1;
+    double sum=0;
+    printf("Enter Numbers:\n");
+    while (1)
+    {
+        scanf("%s",input_by_user);
+       if (!(isNumber(input_by_user)))
+            break;
+        number=strtod(input_by_user,&endptr);
+        sum+=number;
+        counter++;
+    }
+    sum=sum/(counter-1);
+    printf("%lf",sum);
+
+}
 
 int main()
 {
     char operatation[5];
-    printf("Enter the operation you want to perform | + | - | * | / | ^ | sqrt(square root) |\n");
+    printf("Enter the operation you want to perform | + | - | * | / | ^ | sqrt(square root) | a(average of numbers) |\n");
     scanf("%s",operatation);
-    while(operatation[0]!='+' && operatation[0]!='-' && operatation[0]!='*' && operatation[0]!='/' && operatation[0]!='^' && strcmp(operatation,"sqrt"))
+    while(operatation[0]!='+' && operatation[0]!='-' && operatation[0]!='*' && operatation[0]!='/' && operatation[0]!='^' && strcmp(operatation,"sqrt") && operatation[0]!='a')
     {
         printf("Enter a valid operator\n");
         scanf("%s",operatation);
@@ -92,6 +122,10 @@ int main()
         else
             base=power(base,exponent);
         printf("%lf",base);
+    }
+    else if(operatation[0]=='a')
+    {
+        calculate_average();
     }
     else
     square_root();
